@@ -29,9 +29,15 @@ public class PageControlFragment extends Fragment implements View.OnClickListene
     private String mParam2;
     EditText editText;
     WebView webView;
-
+    OnPageControlSelectedListener callback;
+    public void setOnPageConrolSelectedListener(OnPageControlSelectedListener callback) {
+        this.callback = callback;
+    }
     public PageControlFragment() {
         // Required empty public constructor
+    }
+    public interface OnPageControlSelectedListener {
+        public void onActionSelected(String url);
     }
 
     /**
@@ -45,10 +51,6 @@ public class PageControlFragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types and number of parameters
     public static PageControlFragment newInstance(String param1, String param2) {
         PageControlFragment fragment = new PageControlFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -71,13 +73,11 @@ public class PageControlFragment extends Fragment implements View.OnClickListene
         ImageButton button3 = (ImageButton) view.findViewById(R.id.imageButton4);
         ImageButton button2 = (ImageButton)view.findViewById(R.id.imageButton3);
         ImageButton button1 = (ImageButton) view.findViewById(R.id.imageButton2);
-
         editText = view.findViewById(R.id.editText);
-        webView = view2.findViewById(R.id.webView);
-
-
-
+        webView = view2.findViewById(R.id.webview);
         button3.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button1.setOnClickListener(this);
 
         return view;
 
@@ -89,18 +89,24 @@ public class PageControlFragment extends Fragment implements View.OnClickListene
             case R.id.imageButton4:
                 String url = editText.getText().toString();
                 String url2 = "";
-                if (!url.contains("http://")){
-                    url2 = "http://" + url;
+                if (!url.contains("https://")){
+                    url2 = "https://" + url;
                 }
                 else{
                     url2 = url;
                 }
-                webView.loadUrl(url2);
+                callback.onActionSelected(url2);
+
+                break;
+            case R.id.imageButton3:
+                callback.onActionSelected("f");
                 break;
             case R.id.imageButton2:
 
+                callback.onActionSelected("b");
+
                 break;
-            // Do this for all buttons.
+
         }
     }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PageControlFragment">
@@ -10,35 +11,58 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="105dp"
-        android:layout_height="81dp"
+        android:layout_width="165dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="401dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="108dp"
         android:hint="url"
-         />
+        app:layout_constraintBottom_toTopOf="@+id/imageButton4"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton2"
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="76dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="505dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="10dp"
         android:src="@android:drawable/ic_media_previous"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="31dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@android:drawable/ic_media_next"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <ImageButton
         android:id="@+id/imageButton4"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="57dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginBottom="140dp"
         android:src="@android:drawable/ic_search_category_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="126dp"
+        android:src="@android:drawable/ic_media_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton4"
         tools:src="@tools:sample/avatars" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

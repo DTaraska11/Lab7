@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -66,9 +67,35 @@ public class PageViewerFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_page_viewer, container, false);
-        webView = view.findViewById(R.id.webView);
+        webView = (WebView)view.findViewById(R.id.webview);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.setWebViewClient(MyWebViewClient);
         webView.getSettings().setJavaScriptEnabled(true);
-        return inflater.inflate(R.layout.fragment_page_viewer, container, false);
+        webView.loadUrl("https://www.google.com");
+        return view;
+    }
+
+    public void setWebView(String URL){
+
+        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(MyWebViewClient);
+        webView.loadUrl(URL);
+
+
+    }
+
+    public void back(){
+        if(webView.canGoBack()){
+            webView.goBack();
+        }
+    }
+
+    public void forward(){
+        if(webView.canGoForward()){
+            webView.goForward();
+        }
     }
 }
