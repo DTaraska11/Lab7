@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,10 +23,11 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     PageListFragment pageListFragment = new PageListFragment();
     BrowserControlFragment browserControlFragment = new BrowserControlFragment();
     ArrayList<PageViewerFragment> viewerFragments;
+    int orientation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int orientation = getResources().getConfiguration().orientation;
+        orientation = getResources().getConfiguration().orientation;
         viewerFragments = new ArrayList<>();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_main);
@@ -42,7 +44,7 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
             setContentView(R.layout.activity_main);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frameLayout2, pageControlFragment);
-            ft.replace(R.id.frameLayout, pageViewerFragment);
+            ft.replace(R.id.frameLayout, pagerFragment);
             ft.replace(R.id.frameLayout3, browserControlFragment);
             ft.commit();
         }
@@ -60,9 +62,11 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
             BrowserControlFragment browserControlFragment = (BrowserControlFragment) fragment;
             browserControlFragment.setBrowserControlListener(this);
         }
-        if (fragment instanceof PageListFragment) {
-            PageListFragment pageListFragment = (PageListFragment) fragment;
-            pageListFragment.setOnTitleSelectedListener(this);
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (fragment instanceof PageListFragment) {
+                PageListFragment pageListFragment = (PageListFragment) fragment;
+                pageListFragment.setOnTitleSelectedListener(this);
+            }
         }
 
     }
@@ -76,9 +80,12 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
         }
         else if(url.equals("b")){
             pagerFragment.fragments.get(index).back();
+
         }
         else {
             pagerFragment.fragments.get(index).setWebView(url);
+            //ActionBar ab = getSupportActionBar();
+            //ab.setTitle(pagerFragment.fragments.get(pagerFragment.viewPager.getCurrentItem()).webView.getTitle());
         }
     }
 
@@ -86,7 +93,11 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     public void fragmentAdded(String url){
 
         pagerFragment.addFragment(new PageViewerFragment());
-        refreshList();
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            refreshList();
+        }
+        //ActionBar ab = getSupportActionBar();
+        //ab.setTitle(pagerFragment.fragments.get(pagerFragment.viewPager.getCurrentItem()).webView.getTitle());
 
 
     }

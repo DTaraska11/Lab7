@@ -2,6 +2,8 @@ package temple.edu;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -70,7 +72,14 @@ public class PageViewerFragment extends Fragment {
         webView = (WebView)view.findViewById(R.id.webview);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        webView.setWebViewClient(MyWebViewClient);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                ActionBar ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
+                ab.setTitle(view.getTitle());
+            }
+        });
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://www.google.com");
         return view;
@@ -83,6 +92,9 @@ public class PageViewerFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(MyWebViewClient);
         webView.loadUrl(URL);
+        //ActionBar ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        //ab.setTitle(webView.getTitle());
+
 
 
     }
@@ -90,12 +102,16 @@ public class PageViewerFragment extends Fragment {
     public void back(){
         if(webView.canGoBack()){
             webView.goBack();
+            //ActionBar ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
+            //ab.setTitle(webView.getTitle());
         }
     }
 
     public void forward(){
         if(webView.canGoForward()){
             webView.goForward();
+            //ActionBar ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
+            //ab.setTitle(webView.getTitle());
         }
     }
 }
