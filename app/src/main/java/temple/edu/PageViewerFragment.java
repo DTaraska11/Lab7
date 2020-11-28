@@ -13,6 +13,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PageViewerFragment#newInstance} factory method to
@@ -75,8 +77,8 @@ public class PageViewerFragment extends Fragment {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                ActionBar ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-                ab.setTitle(view.getTitle());
+                ActionBar ab = ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar();
+                //ab.setTitle(view.getTitle());
             }
         });
 

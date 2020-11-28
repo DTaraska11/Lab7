@@ -1,5 +1,8 @@
 package temple.edu;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,8 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static temple.edu.BookmarksActivity.PREFERENCES;
+import static temple.edu.BookmarksActivity.WEB_LINKS;
+import static temple.edu.BookmarksActivity.WEB_TITLE;
 
 public class BrowserActivity extends AppCompatActivity implements PageControlFragment.OnPageControlSelectedListener, BrowserControlFragment.BrowserControlListener, PageListFragment.OnTitleSelectedListener {
 
@@ -91,14 +101,71 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
 
     @Override
     public void fragmentAdded(String url){
-
         pagerFragment.addFragment(new PageViewerFragment());
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             refreshList();
         }
         //ActionBar ab = getSupportActionBar();
         //ab.setTitle(pagerFragment.fragments.get(pagerFragment.viewPager.getCurrentItem()).webView.getTitle());
+    }
 
+    @Override
+    public void bookmarkAdded(String url) {
+        String message;
+        int index = pagerFragment.viewPager.getCurrentItem();
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+        String jsonLink = sharedPreferences.getString(WEB_LINKS, null);
+        String jsonTitle = sharedPreferences.getString(WEB_TITLE, null);
+
+
+        if (jsonLink != null && jsonTitle != null) {
+
+            Gson gson = new Gson();
+            ArrayList<String> linkList = gson.fromJson(jsonLink, new TypeToken<ArrayList<String>>() {
+            }.getType());
+
+            ArrayList<String> titleList = gson.fromJson(jsonTitle, new TypeToken<ArrayList<String>>() {
+            }.getType());
+
+            if (linkList.contains(pagerFragment.fragments.get(index).webView.getUrl())) {
+                linkList.remove(pagerFragment.fragments.get(index).webView.getUrl());
+                titleList.remove(pagerFragment.fragments.get(index).webView.getTitle().trim());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(WEB_LINKS, new Gson().toJson(linkList));
+                editor.putString(WEB_TITLE, new Gson().toJson(titleList));
+                editor.apply();
+
+
+                message = "Bookmark Removed";
+
+            } else {
+                linkList.add(pagerFragment.fragments.get(index).webView.getUrl());
+                titleList.add(pagerFragment.fragments.get(index).webView.getTitle().trim());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(WEB_LINKS, new Gson().toJson(linkList));
+                editor.putString(WEB_TITLE, new Gson().toJson(titleList));
+                editor.apply();
+
+                message = "Bookmarked";
+            }
+        } else {
+
+            ArrayList<String> linkList = new ArrayList<>();
+            ArrayList<String> titleList = new ArrayList<>();
+            linkList.add(pagerFragment.fragments.get(index).webView.getUrl());
+            titleList.add(pagerFragment.fragments.get(index).webView.getTitle());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(WEB_LINKS, new Gson().toJson(linkList));
+            editor.putString(WEB_TITLE, new Gson().toJson(titleList));
+            editor.apply();
+
+            message = "Bookmarked";
+        }
+    }
+
+    @Override
+    public void bookmarksOpened() {
+        startActivity(new Intent(this, BookmarksActivity.class));
 
     }
 

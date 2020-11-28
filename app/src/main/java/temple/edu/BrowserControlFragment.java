@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 /**
@@ -36,6 +37,10 @@ public class BrowserControlFragment extends Fragment implements View.OnClickList
     }
     public interface BrowserControlListener{
         public void fragmentAdded(String url);
+
+        public void bookmarkAdded(String url);
+
+        public void bookmarksOpened();
     }
     /**
      * Use this factory method to create a new instance of
@@ -72,6 +77,10 @@ public class BrowserControlFragment extends Fragment implements View.OnClickList
         View view =  inflater.inflate(R.layout.fragment_browser_control, container, false);
         ImageButton imageButton = (ImageButton) view.findViewById(R.id.imageButton);
         imageButton.setOnClickListener(this);
+        Button button = (Button) view.findViewById(R.id.button);
+        Button button2 = (Button) view.findViewById(R.id.button2);
+        button.setOnClickListener(this);
+        button2.setOnClickListener(this);
 
 
         return view;
@@ -86,7 +95,12 @@ public class BrowserControlFragment extends Fragment implements View.OnClickList
                 callback.fragmentAdded("n");
                 break;
             case R.id.imageButton2:
-
+                break;
+            case R.id.button:
+                callback.bookmarkAdded("n");
+                break;
+            case R.id.button2:
+                callback.bookmarksOpened();
                 break;
             // Do this for all buttons.
         }
