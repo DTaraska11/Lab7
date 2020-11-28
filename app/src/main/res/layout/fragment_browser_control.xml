@@ -9,29 +9,33 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="189dp"
-        android:layout_height="402dp"
-        android:layout_marginStart="44dp"
+        android:layout_width="170dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="7dp"
+        android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
-        tools:src="@tools:sample/backgrounds/scenic" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="57dp"
-        android:layout_height="105dp"
-        android:layout_marginEnd="44dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton" />
+        tools:src="@android:drawable/ic_input_add" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="118dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="6dp"
-        android:text="Button"
+        android:layout_width="120dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:drawableTop="@android:drawable/ic_dialog_dialer"
+        android:text="Bookmark Manager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButton" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="106dp"
+        android:layout_height="89dp"
+        android:layout_marginEnd="7dp"
+        android:drawableTop="@android:drawable/btn_star_big_on"
+        android:text="Bookmark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
