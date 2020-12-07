@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -57,6 +58,19 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
             ft.replace(R.id.frameLayout, pagerFragment);
             ft.replace(R.id.frameLayout3, browserControlFragment);
             ft.commit();
+        }
+
+        Uri data = getIntent().getData();
+        if(getIntent().getData() != null) {
+            String scheme = data.getScheme(); // "http"
+            String host = data.getHost(); // "twitter.com"
+            List<String> params = data.getPathSegments();
+            String first = params.get(0); // "status"
+            String second = params.get(1); // "1234"
+
+            fragmentAdded(scheme + host);
+            int index = pagerFragment.viewPager.getCurrentItem();
+            pagerFragment.fragments.get(index).setWebView(scheme + host);
         }
 
     }
